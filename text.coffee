@@ -73,7 +73,6 @@ dispatchTake = (target) ->
       taken = true
     if taken
       World.taken[World.pos].push obj
-      clearOutput()
       addOutput("You take the #{Level.objects[obj].name}.")
       dispatchLookAround(true)
       return
@@ -107,6 +106,7 @@ dispatchGo = (target) ->
     addOutput("Where?")
 
 dispatchHelp = ->
+  addOutput('Commands:')
   addOutput('go <em>direction</em>')
   addOutput('shoot <em>object</em>')
   addOutput('look at <em>object</em>')
@@ -136,7 +136,10 @@ dispatchCommand = (command) ->
   else if verb is 'shoot'
     dispatchShoot(components[1])
   else
-    dispatchHelp()
+    if verb in _.keys(Level.places[World.pos].connections)
+      dispatchGo(verb)
+    else
+      dispatchHelp()
 
 $ ->
   $('#command').focus()
