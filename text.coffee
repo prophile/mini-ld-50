@@ -29,9 +29,18 @@ objectsHere = ->
 printStatusLine = ->
   addOutput("You have #{World.kills} kills and #{World.health} health.")
 
-dispatchShoot = ->
+isMatch = (obj, name) ->
+  return true unless name?
+  aliases = Level.objects[obj].aliases ? obj
+  for alias in aliases
+    if name is alias
+      return true
+  return false
+
+dispatchShoot = (target) ->
   console.log(objectsHere())
   for obj in objectsHere()
+    continue unless isMatch(obj, target)
     if Level.objects[obj].health > 0
       [weaponDamage, weaponReload] = World.weapon
       probKill = weaponDamage / Level.objects[obj].health
@@ -52,8 +61,9 @@ dispatchShoot = ->
       return
   addOutput("You find nothing to shoot.")
 
-dispatchTake = ->
+dispatchTake = (target) ->
   for obj in objectsHere()
+    continue unless isMatch(obj, target)
     taken = false
     if Level.objects[obj].heals > 0
       World.health += Level.objects[obj].heals
@@ -82,8 +92,9 @@ dispatchLookAround = (takeFire = false) ->
   underFire() if takeFire
   printStatusLine()
 
-dispatchLookAt = ->
+dispatchLookAt = (target) ->
   for obj in objectsHere()
+    continue unless isMatch(obj, target)
     addOutput(Level.objects[obj].long)
 
 dispatchGo = (target) ->
@@ -117,13 +128,13 @@ dispatchCommand = (command) ->
   else if verb is 'look' and components.length is 1
     dispatchLookAround()
   else if verb is 'look' and components[1] is 'at'
-    dispatchLookAt()
+    dispatchLookAt(components[2])
   else if verb is 'take' or verb is 'get'
-    dispatchTake()
+    dispatchTake(components[1])
   else if verb is 'go' and components.length is 2
     dispatchGo(components[1])
   else if verb is 'shoot'
-    dispatchShoot()
+    dispatchShoot(components[1])
   else
     dispatchHelp()
 

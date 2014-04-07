@@ -24,6 +24,10 @@ objects:
     long: >
       It is a small health pack. One wonders why war is even necessary with
       these kinds of medical miracles.
+    aliases: # aliases only match the first word
+      - health
+      - pack
+      - small
   foreigner:
     health: 5
     damage: 2
@@ -32,6 +36,11 @@ objects:
     long: >
       This man appears to be extremely foreign. You feel an uncontrollable urge
       to kill him.
+    aliases:
+      - man
+      - guy
+      - foreigner
+      - steve
   akg:
     health: 0
     damage: 0
@@ -41,6 +50,15 @@ objects:
     long: >
       You're pretty sure the AKG 451 is a microphone, but this one appears to be
       rifled.
+    aliases:
+      - gun
+      - weapon
+      - rifle
+      - akg
+      - "451"
+      - mic
+      - mike
+      - microphone
 config:
   start_location: entrance
   start_weapon: [5, 3] # 5 damage, reload every 3 shots
