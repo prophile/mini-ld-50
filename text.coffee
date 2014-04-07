@@ -4,6 +4,20 @@ World =
   taken: _.object([place, []] for place in _.keys(Level.places))
   kills: 0
 
+noMoreOutput = false
+
+underFire = ->
+  for obj in objectsHere()
+    if Level.objects[obj].damage > 0
+      dmg = Level.objects[obj].damage
+      if Math.random() < 0.8
+        addOutput("The #{Level.objects[obj].name} hits you for #{dmg} damage.")
+        World.health -= dmg
+        if World.health <= 0
+          addOutput("You are dead. You finished with #{World.kills} kills.")
+          $('#command').attr('disabled', 'disabled')
+          noMoreOutput = true
+
 objectsHere = ->
   _.difference(Level.places[World.pos].objects, World.taken[World.pos])
 
@@ -21,6 +35,7 @@ dispatchShoot = ->
         printStatusLine()
       else
         addOutput("You hit the #{Level.objects[obj].name} for #{Level.config.weapon_damage} damage.")
+      underFire()
       return
   addOutput("You find nothing to shoot.")
 
@@ -31,20 +46,21 @@ dispatchTake = ->
       World.taken[World.pos].push obj
       clearOutput()
       addOutput("You take the #{Level.objects[obj].name}.")
-      dispatchLookAround()
+      dispatchLookAround(true)
       return
   addOutput("There is nothing to take.")
 
 addOutput = (output) ->
-  $('#output').append($('<p>').text(output))
+  $('#output').append($('<p>').text(output)) unless noMoreOutput
 
 clearOutput = ->
   $('#output').empty()
 
-dispatchLookAround = ->
+dispatchLookAround = (takeFire = false) ->
   addOutput(Level.places[World.pos].text)
   for obj in objectsHere()
     addOutput("There is a #{Level.objects[obj].name}.")
+  underFire() if takeFire
   printStatusLine()
 
 dispatchGo = (target) ->
@@ -52,7 +68,7 @@ dispatchGo = (target) ->
   if tgt?
     World.pos = tgt
     clearOutput()
-    dispatchLookAround()
+    dispatchLookAround(true)
   else
     addOutput("Where?")
 
