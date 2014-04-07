@@ -1,0 +1,40 @@
+places:
+  entrance:
+    objects: [health20]
+    text: >
+      You are in an entrance hallway. The walls, floor and ceilings are grey and
+      brown. The lens flare from an open window hurts your eyes slightly. There
+      is an exit to the south.
+    connections:
+      south: wall
+  wall:
+    objects: [foreigner]
+    text:
+      You are facing a giant brick wall. It would be a solid piece of
+      architecture if not for the layers of muck, which make it a sort of
+      grey-brown colour.
+    connections:
+      north: entrance
+objects:
+  health20:
+    health: 0
+    damage: 0
+    heals: 20
+    name: small health pack
+    long: >
+      It is a small health pack. One wonders why war is even necessary with
+      these kinds of medical miracles.
+  foreigner:
+    health: 5
+    damage: 2
+    heals: 0
+    name: foreigner
+    long: >
+      This man appears to be extremely foreign. You feel an uncontrollable urge
+      to kill him.
+config:
+  start_location: entrance
+  weapon_damage: 5
+  start_health: 20
+  required_kills: 1
+
