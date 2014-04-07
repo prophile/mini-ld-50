@@ -46,4 +46,5 @@ config:
   start_weapon: [5, 3] # 5 damage, reload every 3 shots
   start_health: 20
   required_kills: 1
+  dodge_chance: 0.3 # chance of dodging incoming fire
 

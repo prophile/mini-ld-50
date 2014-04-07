@@ -11,7 +11,7 @@ underFire = ->
   for obj in objectsHere()
     if Level.objects[obj].damage > 0
       dmg = Level.objects[obj].damage
-      if Math.random() < 0.8
+      if Math.random() < (1 - Level.config.dodge_chance)
         addOutput("The #{Level.objects[obj].name} hits you for #{dmg} damage.")
         World.health -= dmg
         if World.health <= 0
