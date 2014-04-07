@@ -9,7 +9,8 @@ noMoreOutput = false
 
 endGame = ->
   $('#command').attr('disabled', 'disabled')
-  addOutput("<em>A game by Taylor Vaughan and Alistair Lynn.</em>")
+  addOutput('<em>A game by <a href="http://taylor-vaughan.com/">Taylor Vaughan</a> and <a href="https://twitter.com/arplynn">Alistair Lynn</a>.</em>')
+  addOutput('<small><emph>Thanks to <a href="https://twitter.com/nfreader">Nick Farley</a> for hosting.</emph></small>')
   noMoreOutput = true
 
 underFire = ->
