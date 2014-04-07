@@ -29,12 +29,20 @@ places:
       You are facing a giant brick wall. It would be a solid piece of
       architecture if not for the layers of muck, which make it a sort of
       grey-brown colour.
-      <br>To the north you can enter a building, and to the east is an open field.
+      <br>To the north you can enter a building, to the east is an open field, and to the west is a highway.
     connections:
       north: entrance
       east: field
+      west: road
+  road:
+    objects: [obscenesoldier]
+    text:
+      You are standing on a grey highway. You're not sure where it leads, just that it leads away from this horror and madness. No way you're going to take it!
+      <br>To the east you can get back to the fighting.
+    connections:
+      east: wall
   field:
-    objects: [crossfire, obscenesoldier]
+    objects: [crossfire,m4]
     text:
       You are sprinting across an open field, and seriously regretting that decision. Bullets whizz past you on all sides. The once beautiful green field has been reduced to a grey and brown mush of dead grass and mud.
       <br>There is a huge wall to the west, a crashed helicopter to the north, a warehouse to the east and a forest to the south.
@@ -66,7 +74,7 @@ places:
       <br>To the south is a crashed helicopter, you can enter a house to the north, a hospital is to the west, and there are some train tracks to the east. Just be careful you don't get hit by a train.
     connections:
       north: house
-      south: crashedhelicopter
+      south: helicopter
       east: traintracks
       west: hospital
   house:
@@ -93,7 +101,7 @@ places:
       south: field
       north: suburbs
   warehouse:
-    objects: [terrorist, health20]
+    objects: [terrorist, health20,ak47]
     text:
       The drab, grey floor is caked with brown mud stains tracked in by soldiers' boots. There are brown crates of various sizes scattered around the room, providing convenient cover.
       <br>To the west is an open field and to the north is a train station.
@@ -101,7 +109,7 @@ places:
       west: field
       north: trainstation
   forest:
-    objects: [nazizombie,m16]
+    objects: [nazizombie,nazizombie2,nazizombie3,m16]
     text:
       The brown trees of the forest are shrouded in thick, grey fog.
       <br>To the north is an open field, and to the south is a river.
@@ -175,7 +183,7 @@ objects:
       - small
   crossfire:
     health: 0
-    damage: 5
+    damage: 4
     heals: 0
     name: crossfire
     long: >
@@ -248,8 +256,8 @@ objects:
       - enemy
       - richard
   nazi:
-    health: 10
-    damage: 4
+    health: 15
+    damage: 5
     heals: 0
     name: nazi
     long: >
@@ -288,8 +296,8 @@ objects:
       - enemy
       - frank
   nazizombie:
-    health: 20
-    damage: 3
+    health: 5
+    damage: 2
     heals: 0
     name: nazi zombie
     long: >
@@ -301,6 +309,34 @@ objects:
       - zombie
       - enemy
       - hans
+  nazizombie2:
+    health: 5
+    damage: 2
+    heals: 0
+    name: nazi zombie
+    long: >
+      The only enemy you feel LESS guilty killing than a regular nazi.
+    aliases:
+      - man
+      - guy
+      - nazi
+      - zombie
+      - enemy
+      - erik
+  nazizombie3:
+    health: 5
+    damage: 2
+    heals: 0
+    name: nazi zombie
+    long: >
+      The only enemy you feel LESS guilty killing than a regular nazi.
+    aliases:
+      - man
+      - guy
+      - nazi
+      - zombie
+      - enemy
+      - oskar
   fish:
     health: 1
     damage: 0
@@ -412,9 +448,21 @@ objects:
       - 9
       - 9mm
       - pistol
+  mauser:
+    health: 0
+    damage: 0
+    heals: 0
+    weapon: [5, 10]
+    name: mauser
+    long: >
+      A German pistol.
+      - gun
+      - weapon
+      - mauser
+      - pistol
 config:
   start_location: entrance
   start_weapon: [5, 3] # 5 damage, reload every 3 shots
   start_health: 20
-  required_kills: 5
+  required_kills: 10
   dodge_chance: 0.3 # chance of dodging incoming fire
