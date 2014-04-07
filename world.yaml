@@ -1,6 +1,6 @@
 places:
   entrance:
-    objects: [health20]
+    objects: [health20, akg]
     text: >
       You are in an entrance hallway. The walls, floor and ceilings are grey and
       brown. The lens flare from an open window hurts your eyes slightly. There
@@ -32,6 +32,15 @@ objects:
     long: >
       This man appears to be extremely foreign. You feel an uncontrollable urge
       to kill him.
+  akg:
+    health: 0
+    damage: 0
+    heals: 0
+    weapon: [10, 1] # 10 damage, reload every shot
+    name: AKG 451
+    long: >
+      You're pretty sure the AKG 451 is a microphone, but this one appears to be
+      rifled.
 config:
   start_location: entrance
   start_weapon: [5, 3] # 5 damage, reload every 3 shots

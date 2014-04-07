@@ -46,8 +46,14 @@ dispatchShoot = ->
 
 dispatchTake = ->
   for obj in objectsHere()
+    taken = false
     if Level.objects[obj].heals > 0
       World.health += Level.objects[obj].heals
+      taken = true
+    else if Level.objects[obj].weapon?
+      World.weapon = Level.objects[obj].weapon
+      taken = true
+    if taken
       World.taken[World.pos].push obj
       clearOutput()
       addOutput("You take the #{Level.objects[obj].name}.")
@@ -67,6 +73,10 @@ dispatchLookAround = (takeFire = false) ->
     addOutput("There is a #{Level.objects[obj].name}.")
   underFire() if takeFire
   printStatusLine()
+
+dispatchLookAt = ->
+  for obj in objectsHere()
+    addOutput(Level.objects[obj].long)
 
 dispatchGo = (target) ->
   tgt = Level.places[World.pos].connections[target]
@@ -96,6 +106,8 @@ dispatchCommand = (command) ->
     dispatchLookAround()
   else if verb is 'look' and components.length is 1
     dispatchLookAround()
+  else if verb is 'look' and components[1] is 'at'
+    dispatchLookAt()
   else if verb is 'take'
     dispatchTake()
   else if verb is 'go' and components.length is 2
