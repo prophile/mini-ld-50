@@ -10,6 +10,20 @@ objectsHere = ->
 printStatusLine = ->
   addOutput("You have #{World.kills} kills and #{World.health} health.")
 
+dispatchShoot = ->
+  for obj in objectsHere()
+    if Level.objects[obj].health > 0
+      probKill = Level.config.weapon_damage / Level.objects[obj].health
+      if Math.random() < probKill
+        addOutput("You kill the #{Level.objects[obj].name}.")
+        World.kills += 1
+        World.taken[World.pos].push obj
+        printStatusLine()
+      else
+        addOutput("You hit the #{Level.objects[obj].name} for #{Level.config.weapon_damage} damage.")
+      return
+  addOutput("You find nothing to shoot.")
+
 dispatchTake = ->
   for obj in objectsHere()
     if Level.objects[obj].heals > 0
@@ -65,6 +79,8 @@ dispatchCommand = (command) ->
     dispatchTake()
   else if verb is 'go' and components.length is 2
     dispatchGo(components[1])
+  else if verb is 'shoot'
+    dispatchShoot()
   else
     dispatchHelp()
 
