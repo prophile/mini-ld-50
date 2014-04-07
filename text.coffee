@@ -106,6 +106,8 @@ dispatchCommand = (command) ->
   components = command.toLowerCase().split(' ')
   return unless components.length > 0
   verb = components[0]
+  outputObj = $('<pre>').text('> ' + command)
+  $('#output').append(outputObj)
   if verb is 'help'
     dispatchHelp()
     $('#command').attr('placeholder', 'look')
