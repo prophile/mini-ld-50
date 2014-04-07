@@ -27,6 +27,7 @@ dispatchCommand = (command) ->
   verb = components[0]
   if verb is 'help'
     dispatchHelp()
+    $('#command').attr('placeholder', 'look')
   else if verb is 'clear'
     clearOutput()
     dispatchLookAround()
@@ -45,4 +46,5 @@ $ ->
     event.preventDefault()
     dispatchCommand $('#command').val()
     false
+  dispatchLookAround()
 
