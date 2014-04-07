@@ -1,25 +1,135 @@
 places:
   entrance:
-    objects: [health20, akg]
+    objects: [health10,akg]
     text: >
       You are in an entrance hallway. The walls, floor and ceilings are grey and
-      brown. The lens flare from an open window hurts your eyes slightly. There
-      is an exit to the south.
+      brown. The lens flare from an open window hurts your eyes slightly.
+      <br>There is an exit to the south, an office to the west, and a bathroom to the north.
     connections:
+      north: bathroom
+      west: office
       south: wall
+  office:
+    objects: [soda,9mm]
+    text: >
+      You are in a grey office cubicle, with a nice brown desk. The computer has been shot to pieces, and papers are scattered across the desk.
+      <br>You can return to the hallway to the east.
+    connections:
+      east: entrance
+  bathroom:
+    objects: [spy]
+    text: >
+      The dim, flickering lighting makes the white tile of the bathroom look grey. There's also some brown here, but you'd rather not think about that.
+      <br>You can go south to get back to the hallway.
+    connections:
+      south: entrance
   wall:
     objects: [foreigner]
     text:
       You are facing a giant brick wall. It would be a solid piece of
       architecture if not for the layers of muck, which make it a sort of
       grey-brown colour.
+      <br>To the north you can enter a building, and to the east is an open field.
     connections:
       north: entrance
+      east: field
+  field:
+    objects: [crossfire, obscenesoldier]
+    text:
+      You are sprinting across an open field, and seriously regretting that decision. Bullets whizz past you on all sides. The once beautiful green field has been reduced to a grey and brown mush of dead grass and mud.
+      <br>There is a huge wall to the west, a crashed helicopter to the north, a warehouse to the east and a forest to the south.
+    connections:
+      west: wall
+      north: helicopter
+      east: warehouse
+      south: forest
+  trainstation:
+    objects: [nazi]
+    text:
+      This normally-bustling train station is empty. Its brown benches are usually filled to the brim with passengers pushing each other for more room, but the war has scared them away.
+      <br>You can cross the train tracks to the west, but risk being hit by a train. There's also a warehouse to the south.
+    connections:
+      west: traintracks
+      south: warehouse
+  traintracks:
+    objects: [train]
+    text:
+      You are running across the train tracks, trying to avoid being hit by a train. The brown wood tracks stand out against the grey gravel.
+      <br>To the west are some suburbs, and the train station is to the east.
+    connections:
+      west: suburbs
+      east: trainstation
+  suburbs:
+    objects: [terrorist]
+    text:      
+      This once-vibrant neighborhood has been ruined by the war. The houses that haven't been blown up have had their windows smashed out. The cars that haven't been blown up have...well, there aren't any cars that haven't been blown up. The houses were once colorful, but now they're all covered in grey ash and brown mold.
+      <br>To the south is a crashed helicopter, you can enter a house to the north, a hospital is to the west, and there are some train tracks to the east. Just be careful you don't get hit by a train.
+    connections:
+      north: house
+      south: crashedhelicopter
+      east: traintracks
+      west: hospital
+  house:
+    objects: [soda, revolver]
+    text:      
+      This house has been mostly looted. The brown wooden furniture has been smashed and the pieces scattered, and there's grey mold beginning to grow on the walls.
+      <br>You can exit the house to the south.
+    connections:
+      south: suburbs
+  hospital:
+    objects: [health50,woundedsoldier]
+    text:      
+      The war has hit this hospital hard. Its normally pristine white floors and walls are now a dirty grey, and there are brown stains all over from all the dried blood. The screams of the wounded and dying fill the air, as well as the screams of the uninsured who are seeing their medical bills for the first time.
+      <br>You can exit to the east.
+    connections:
+      east: suburbs
+  helicopter:
+    objects: [pilot, fire]
+    text:
+      The downed wreckage of a military helicopter lies here, shattered on the grey-brown ground. You can't tell if it belonged to your side or the enemy's.
+      Small fires are still burning around the area.
+      <br>To the south lies an open field, and to the north are some suburbs.
+    connections:
+      south: field
+      north: suburbs
+  warehouse:
+    objects: [terrorist, health20]
+    text:
+      The drab, grey floor is caked with brown mud stains tracked in by soldiers' boots. There are brown crates of various sizes scattered around the room, providing convenient cover.
+      <br>To the west is an open field and to the north is a train station.
+    connections:
+      west: field
+      north: trainstation
+  forest:
+    objects: [nazizombie,m16]
+    text:
+      The brown trees of the forest are shrouded in thick, grey fog.
+      <br>To the north is an open field, and to the south is a river.
+    connections:
+      north: field
+      south: river
+  river:
+    objects: [fish,]
+    text:
+      The normally grey water of the river is filled with brown mud churned up by the endless parade of marching soldiers.
+      <br>To the north is an open field.
+    connections:
+      north: field
 objects:
-  health20:
+  soda:
     health: 0
     damage: 0
-    heals: 20
+    heals: 5
+    name: soda
+    long: >
+      This grey soda can is filled with delicious brown nectar of the gods. The Taste of America!™
+    aliases:
+      - soda
+      - coke
+  health10:
+    health: 0
+    damage: 0
+    heals: 10
     name: small health pack
     long: >
       It is a small health pack. One wonders why war is even necessary with
@@ -28,19 +138,179 @@ objects:
       - health
       - pack
       - small
+  health20:
+    health: 0
+    damage: 0
+    heals: 20
+    name: large health pack
+    long: >
+      It is a large health pack. One wonders why war is even necessary with
+      these kinds of medical miracles.
+    aliases: # aliases only match the first word
+      - health
+      - pack
+      - large
+  health50:
+    health: 0
+    damage: 0
+    heals: 50
+    name: very large health pack
+    long: >
+      It is a health pack capable of performing automated lifesaving surgery. One wonders why war is even necessary with
+      these kinds of medical miracles.
+    aliases: # aliases only match the first word
+      - health
+      - pack
+      - large
+        - very
+  fire:
+    health: 0
+    damage: 1
+    heals: 0
+    name: small fire
+    long: >
+      You are standing in a gasoline fire caused by the helicopter. You should probably step out of it.
+    aliases: # aliases only match the first word
+      - fire
+      - small
+  crossfire:
+    health: 0
+    damage: 5
+    heals: 0
+    name: crossfire
+    long: >
+      You are caught in the crossfire between your side and the enemy side.
+    aliases: # aliases only match the first word
+      - crossfire
+      - bullets
+  train:
+    health: 0
+    damage: 10
+    heals: 0
+    name: train
+    long: >
+      Trains are speeding down the tracks, and they're not slowing down for you at all.
+    aliases: # aliases only match the first word
+      - train
   foreigner:
     health: 5
     damage: 2
     heals: 0
     name: foreigner
     long: >
-      This man appears to be extremely foreign. You feel an uncontrollable urge
-      to kill him.
+      This man is extremely, but ambiguously, foreign. You feel an uncontrollable urge to kill him.
     aliases:
       - man
       - guy
       - foreigner
       - steve
+      - enemy
+  pilot:
+    health: 3
+    damage: 2
+    heals: 0
+    name: helicopter pilot
+    long: >
+      This man barely survived the helicopter crash. Despite his injuries, he's drawn his sidearm and is ready to take you down with him!
+    aliases:
+      - man
+      - guy
+      - pilot
+      - helicopter
+      - enemy
+      - harvey
+  woundedsoldier:
+    health: 1
+    damage: 0
+    heals: 0
+    name: wounded enemy soldier
+    long: >
+      An enemy soldier is lying here in a hospital bed, unconscious, a huge bandage on his head. He may not be a threat, but he's still an enemy. You do the math.
+    aliases:
+      - man
+      - guy
+      - soldier
+      - wounded
+      - enemy
+      - melvin
+  obscenesoldier:
+    health: 15
+    damage: 5
+    heals: 0
+    name: obscene soldier
+    long: >
+      This soldier's voice is strangely high pitched, and he's extremely angry about something. He's insulted your mother, your sexuality, and your combat ability. In all your days in the military, you've never heard so much profanity!
+    aliases:
+      - man
+      - guy
+      - soldier
+      - obscene
+      - enemy
+      - richard
+  nazi:
+    health: 10
+    damage: 4
+    heals: 0
+    name: nazi
+    long: >
+      He's a nazi, kill him!
+    aliases:
+      - man
+      - guy
+      - soldier
+      - nazi
+      - enemy
+      - heinrich
+  spy:
+    health: 10
+    damage: 4
+    heals: 0
+    name: enemy spy
+    long: >
+      Apparently, the facility was infiltrated from within before the war even broke out. Your enemy truly is pure evil!
+    aliases:
+      - man
+      - guy
+      - spy
+      - enemy
+      - james
+  terrorist:
+    health: 15
+    damage: 6
+    heals: 0
+    name: terrorist
+    long: >
+      This guy is obviously a member of the terror cell your unit is tracking. Just look at his ski mask!
+    aliases:
+      - man
+      - guy
+      - terrorist
+      - enemy
+      - frank
+  nazizombie:
+    health: 20
+    damage: 3
+    heals: 0
+    name: nazi zombie
+    long: >
+      The only enemy you feel LESS guilty killing than a regular nazi.
+    aliases:
+      - man
+      - guy
+      - nazi
+      - zombie
+      - enemy
+      - hans
+  fish:
+    health: 1
+    damage: 0
+    heals: 0
+    name: fish
+    long: >
+      A fish, swimming in the river.
+    aliases:
+      - fish
+      - enemy
   akg:
     health: 0
     damage: 0
@@ -59,10 +329,92 @@ objects:
       - mic
       - mike
       - microphone
+  m16:
+    health: 0
+    damage: 0
+    heals: 0
+    weapon: [7, 5]
+    name: M16
+    long: >
+      A standard reliable rifle.
+    aliases:
+      - gun
+      - weapon
+      - rifle
+      - m16
+  m4:
+    health: 0
+    damage: 0
+    heals: 0
+    weapon: [7, 5]
+    name: M4
+    long: >
+      A standard reliable rifle.
+    aliases:
+      - gun
+      - weapon
+      - rifle
+      - m4
+  ak47:
+    health: 0
+    damage: 0
+    heals: 0
+    weapon: [2, 20]
+    name: AK-47
+    long: >
+      Terrorists and Communists use this gun. Are you a terrorist or a communist?
+    aliases:
+      - gun
+      - weapon
+      - rifle
+      - ak47
+      - ak-47
+      - ak
+      - 47
+  tommygun:
+    health: 0
+    damage: 0
+    heals: 0
+    weapon: [4, 15]
+    name: tommy gun
+    long: >
+      Makes you feel like a mafioso.
+    aliases:
+      - gun
+      - weapon
+      - rifle
+      - tommy
+  revolver:
+    health: 0
+    damage: 0
+    heals: 0
+    weapon: [6, 6]
+    name: revolver
+    long: >
+      This map ain't big enough for the two of us, pardner.
+    aliases:
+      - gun
+      - weapon
+      - revolver
+      - cowboy
+      - pistol
+  9mm:
+    health: 0
+    damage: 0
+    heals: 0
+    weapon: [5, 15]
+    name: 9mm pistol
+    long: >
+      A basic pistol. It may not be flashy, but it still shoots bullets, and bullets are generally considred to be pretty deadly.
+    aliases:
+      - gun
+      - weapon
+      - 9
+      - 9mm
+      - pistol
 config:
   start_location: entrance
   start_weapon: [5, 3] # 5 damage, reload every 3 shots
   start_health: 20
-  required_kills: 1
+  required_kills: 5
   dodge_chance: 0.3 # chance of dodging incoming fire
-

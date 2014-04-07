@@ -24,7 +24,12 @@ underFire = ->
           endGame()
 
 objectsHere = ->
-  _.difference(Level.places[World.pos].objects, World.taken[World.pos])
+  objs = _.clone Level.places[World.pos].objects
+  for dropped in World.taken[World.pos]
+    index = objs.indexOf dropped
+    if index > -1
+      objs.splice index, 1
+  objs
 
 printStatusLine = ->
   addOutput("You have #{World.kills} kills and #{World.health} health.")
