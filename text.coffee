@@ -9,6 +9,7 @@ noMoreOutput = false
 
 endGame = ->
   $('#command').attr('disabled', 'disabled')
+  addOutput("<em>A game by Taylor Vaughan and Alistair Lynn.</em>")
   noMoreOutput = true
 
 underFire = ->
@@ -69,7 +70,7 @@ dispatchTake = ->
   addOutput("There is nothing to take.")
 
 addOutput = (output) ->
-  $('#output').append($('<p>').text(output)) unless noMoreOutput
+  $('#output').append($('<p>').html(output)) unless noMoreOutput
 
 clearOutput = ->
   $('#output').empty()
@@ -95,10 +96,10 @@ dispatchGo = (target) ->
     addOutput("Where?")
 
 dispatchHelp = ->
-  addOutput('go <direction>')
-  addOutput('shoot <object>')
-  addOutput('look at <object>')
-  addOutput('take <object>')
+  addOutput('go <em>direction</em>')
+  addOutput('shoot <em>object</em>')
+  addOutput('look at <em>object</em>')
+  addOutput('take <em>object</em>')
   addOutput('look')
 
 dispatchCommand = (command) ->
