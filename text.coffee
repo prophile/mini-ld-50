@@ -7,6 +7,10 @@ World =
 
 noMoreOutput = false
 
+endGame = ->
+  $('#command').attr('disabled', 'disabled')
+  noMoreOutput = true
+
 underFire = ->
   for obj in objectsHere()
     if Level.objects[obj].damage > 0
@@ -16,8 +20,7 @@ underFire = ->
         World.health -= dmg
         if World.health <= 0
           addOutput("You are dead. You finished with #{World.kills} kills.")
-          $('#command').attr('disabled', 'disabled')
-          noMoreOutput = true
+          endGame()
 
 objectsHere = ->
   _.difference(Level.places[World.pos].objects, World.taken[World.pos])
@@ -35,6 +38,10 @@ dispatchShoot = ->
         addOutput("You kill the #{Level.objects[obj].name}.")
         World.kills += 1
         World.taken[World.pos].push obj
+        if World.kills >= Level.config.required_kills
+          addOutput("Congratulations! You have caused the requisite quantity of havoc!")
+          endGame()
+
         printStatusLine()
       else
         addOutput("You hit the #{Level.objects[obj].name} for #{Level.config.weapon_damage} damage.")
