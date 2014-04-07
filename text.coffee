@@ -118,7 +118,7 @@ dispatchCommand = (command) ->
     dispatchLookAround()
   else if verb is 'look' and components[1] is 'at'
     dispatchLookAt()
-  else if verb is 'take'
+  else if verb is 'take' or verb is 'get'
     dispatchTake()
   else if verb is 'go' and components.length is 2
     dispatchGo(components[1])
