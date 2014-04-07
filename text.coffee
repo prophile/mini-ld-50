@@ -133,7 +133,7 @@ dispatchCommand = (command) ->
     dispatchTake(components[1])
   else if verb is 'go' and components.length is 2
     dispatchGo(components[1])
-  else if verb is 'shoot'
+  else if verb in ['shoot', 'kill', 'attack']
     dispatchShoot(components[1])
   else
     if verb in _.keys(Level.places[World.pos].connections)
