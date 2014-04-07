@@ -34,7 +34,7 @@ objects:
       to kill him.
 config:
   start_location: entrance
-  weapon_damage: 5
+  start_weapon: [5, 3] # 5 damage, reload every 3 shots
   start_health: 20
   required_kills: 1
 

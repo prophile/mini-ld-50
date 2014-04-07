@@ -3,6 +3,7 @@ World =
   health: Level.config.start_health
   taken: _.object([place, []] for place in _.keys(Level.places))
   kills: 0
+  weapon: Level.config.start_weapon
 
 noMoreOutput = false
 
@@ -25,9 +26,11 @@ printStatusLine = ->
   addOutput("You have #{World.kills} kills and #{World.health} health.")
 
 dispatchShoot = ->
+  console.log(objectsHere())
   for obj in objectsHere()
     if Level.objects[obj].health > 0
-      probKill = Level.config.weapon_damage / Level.objects[obj].health
+      [weaponDamage, weaponReload] = World.weapon
+      probKill = weaponDamage / Level.objects[obj].health
       if Math.random() < probKill
         addOutput("You kill the #{Level.objects[obj].name}.")
         World.kills += 1
@@ -35,6 +38,8 @@ dispatchShoot = ->
         printStatusLine()
       else
         addOutput("You hit the #{Level.objects[obj].name} for #{Level.config.weapon_damage} damage.")
+      if Math.random() < (1 / weaponReload)
+        addOutput("You reload your weapon.")
       underFire()
       return
   addOutput("You find nothing to shoot.")
