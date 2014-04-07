@@ -45,7 +45,7 @@ dispatchShoot = ->
 
         printStatusLine()
       else
-        addOutput("You hit the #{Level.objects[obj].name} for #{Level.config.weapon_damage} damage.")
+        addOutput("You hit the #{Level.objects[obj].name} for #{weaponDamage} damage.")
       if Math.random() < (1 / weaponReload)
         addOutput("You reload your weapon.")
       underFire()
