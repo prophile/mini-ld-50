@@ -33,6 +33,15 @@ dispatchLookAround = ->
     addOutput("There is a #{Level.objects[obj].name}.")
   printStatusLine()
 
+dispatchGo = (target) ->
+  tgt = Level.places[World.pos].connections[target]
+  if tgt?
+    World.pos = tgt
+    clearOutput()
+    dispatchLookAround()
+  else
+    addOutput("Where?")
+
 dispatchHelp = ->
   addOutput('go <direction>')
   addOutput('shoot <object>')
@@ -54,6 +63,8 @@ dispatchCommand = (command) ->
     dispatchLookAround()
   else if verb is 'take'
     dispatchTake()
+  else if verb is 'go' and components.length is 2
+    dispatchGo(components[1])
   else
     dispatchHelp()
 
