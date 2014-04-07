@@ -4,6 +4,23 @@ World =
   taken: _.object([place, []] for place in _.keys(Level.places))
   kills: 0
 
+objectsHere = ->
+  _.difference(Level.places[World.pos].objects, World.taken[World.pos])
+
+printStatusLine = ->
+  addOutput("You have #{World.kills} kills and #{World.health} health.")
+
+dispatchTake = ->
+  for obj in objectsHere()
+    if Level.objects[obj].heals > 0
+      World.health += Level.objects[obj].heals
+      World.taken[World.pos].push obj
+      clearOutput()
+      addOutput("You take the #{Level.objects[obj].name}.")
+      dispatchLookAround()
+      return
+  addOutput("There is nothing to take.")
+
 addOutput = (output) ->
   $('#output').append($('<p>').text(output))
 
@@ -12,7 +29,9 @@ clearOutput = ->
 
 dispatchLookAround = ->
   addOutput(Level.places[World.pos].text)
-  addOutput("You have #{World.kills} kills and #{World.health} health.")
+  for obj in objectsHere()
+    addOutput("There is a #{Level.objects[obj].name}.")
+  printStatusLine()
 
 dispatchHelp = ->
   addOutput('go <direction>')
@@ -33,6 +52,8 @@ dispatchCommand = (command) ->
     dispatchLookAround()
   else if verb is 'look' and components.length is 1
     dispatchLookAround()
+  else if verb is 'take'
+    dispatchTake()
   else
     dispatchHelp()
 
