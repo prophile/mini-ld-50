@@ -17,10 +17,10 @@ underFire = ->
     if Level.objects[obj].damage > 0
       dmg = Level.objects[obj].damage
       if Math.random() < (1 - Level.config.dodge_chance)
-        addOutput("The #{Level.objects[obj].name} hits you for #{dmg} damage.")
+        addOutput("The <strong>#{Level.objects[obj].name}</strong> hits you for <strong>#{dmg}</strong> damage.")
         World.health -= dmg
         if World.health <= 0
-          addOutput("You are dead. You finished with #{World.kills} kills.")
+          addOutput("You are dead. You finished with <strong>#{World.kills}</strong> kills.")
           endGame()
 
 objectsHere = ->
@@ -32,7 +32,7 @@ objectsHere = ->
   objs
 
 printStatusLine = ->
-  addOutput("You have #{World.kills} kills and #{World.health} health.")
+  addOutput("You have <strong>#{World.kills}</strong> kills and <strong>#{World.health}</strong> health.")
 
 isMatch = (obj, name) ->
   return true unless name?
@@ -50,7 +50,7 @@ dispatchShoot = (target) ->
       [weaponDamage, weaponReload] = World.weapon
       probKill = weaponDamage / Level.objects[obj].health
       if Math.random() < probKill
-        addOutput("You kill the #{Level.objects[obj].name}.")
+        addOutput("You kill the <strong>#{Level.objects[obj].name}</strong>.")
         World.kills += 1
         World.taken[World.pos].push obj
         if World.kills >= Level.config.required_kills
@@ -59,7 +59,7 @@ dispatchShoot = (target) ->
 
         printStatusLine()
       else
-        addOutput("You hit the #{Level.objects[obj].name} for #{weaponDamage} damage.")
+        addOutput("You hit the <strong>#{Level.objects[obj].name}</strong> for <strong>#{weaponDamage}</strong> damage.")
       if Math.random() < (1 / weaponReload)
         addOutput("You reload your weapon.")
       underFire()
@@ -78,7 +78,7 @@ dispatchTake = (target) ->
       taken = true
     if taken
       World.taken[World.pos].push obj
-      addOutput("You take the #{Level.objects[obj].name}.")
+      addOutput("You take the <strong>#{Level.objects[obj].name}</strong>.")
       dispatchLookAround(true)
       return
   addOutput("There is nothing to take.")
@@ -90,9 +90,12 @@ clearOutput = ->
   $('#output').empty()
 
 dispatchLookAround = (takeFire = false) ->
-  addOutput(Level.places[World.pos].text)
+  desc = Level.places[World.pos].text
+  for target of Level.places[World.pos].connections
+    desc = desc.replace(target, "<strong>#{target}</strong>")
+  addOutput(desc)
   for obj in objectsHere()
-    addOutput("There is a #{Level.objects[obj].name}.")
+    addOutput("There is a <strong>#{Level.objects[obj].name}</strong>.")
   underFire() if takeFire
   printStatusLine()
 
